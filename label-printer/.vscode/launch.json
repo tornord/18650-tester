@@ -33,7 +33,7 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "python": "./.venv/bin/python",
+      "python": "${workspaceFolder}/.venv/bin/python",
       "justMyCode": false,
       "env": {
         "PYTHONPATH": "${workspaceFolder}"

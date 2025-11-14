@@ -1,0 +1,171 @@
+[
+  {
+    "name": "A",
+    "state": "WCHG",
+    "elapsedTime": 8464.29,
+    "voltage": 3.132,
+    "current": 0,
+    "inputVoltage": 3.132,
+    "power": 0,
+    "internalResistance": 0.08,
+    "dischargeTotalTime": 6828.29,
+    "dischargeCapacity": 2644,
+    "dischargeEnergy": 9444.2,
+    "waitingToChargeTime": 30.15,
+    "measurePoints": [
+      {
+        "time": 2.4,
+        "voltage": 4.052,
+        "current": -1.5782
+      },
+      {
+        "time": 300,
+        "voltage": 3.924,
+        "current": -1.5393
+      },
+      {
+        "time": 600,
+        "voltage": 3.864,
+        "current": -1.5139
+      },
+      {
+        "time": 899.5,
+        "voltage": 3.816,
+        "current": -1.4961
+      },
+      {
+        "time": 1198.7,
+        "voltage": 3.78,
+        "current": -1.4821
+      },
+      {
+        "time": 1499.9,
+        "voltage": 3.748,
+        "current": -1.4692
+      },
+      {
+        "time": 1799.5,
+        "voltage": 3.716,
+        "current": -1.4567
+      },
+      {
+        "time": 2098.7,
+        "voltage": 3.684,
+        "current": -1.444
+      },
+      {
+        "time": 2399.2,
+        "voltage": 3.652,
+        "current": -1.4303
+      },
+      {
+        "time": 2699.3,
+        "voltage": 3.62,
+        "current": -1.4177
+      },
+      {
+        "time": 3000,
+        "voltage": 3.584,
+        "current": -1.4037
+      },
+      {
+        "time": 3298.1,
+        "voltage": 3.552,
+        "current": -1.391
+      },
+      {
+        "time": 3598.5,
+        "voltage": 3.52,
+        "current": -1.3802
+      },
+      {
+        "time": 3898.5,
+        "voltage": 3.5,
+        "current": -1.3708
+      },
+      {
+        "time": 4198.4,
+        "voltage": 3.476,
+        "current": -1.3614
+      },
+      {
+        "time": 4498.4,
+        "voltage": 3.456,
+        "current": -1.3528
+      },
+      {
+        "time": 4799.1,
+        "voltage": 3.432,
+        "current": -1.3436
+      },
+      {
+        "time": 5098.4,
+        "voltage": 3.408,
+        "current": -1.3341
+      },
+      {
+        "time": 5398.1,
+        "voltage": 3.384,
+        "current": -1.3242
+      },
+      {
+        "time": 5698.5,
+        "voltage": 3.348,
+        "current": -1.3108
+      },
+      {
+        "time": 5999.9,
+        "voltage": 3.312,
+        "current": -1.2978
+      },
+      {
+        "time": 6299.8,
+        "voltage": 3.268,
+        "current": -1.2797
+      },
+      {
+        "time": 6598.3,
+        "voltage": 3.172,
+        "current": -1.241
+      },
+      {
+        "time": 6828.3,
+        "voltage": 2.996,
+        "current": -1.1717
+      }
+    ]
+  },
+  {
+    "name": "B",
+    "state": "IDLE",
+    "elapsedTime": 8467.08,
+    "voltage": 0.068,
+    "current": 0,
+    "inputVoltage": 0.068,
+    "power": 0,
+    "internalResistance": -1,
+    "measurePoints": []
+  },
+  {
+    "name": "C",
+    "state": "IDLE",
+    "elapsedTime": 8467.36,
+    "voltage": 0.056,
+    "current": 0.0002,
+    "inputVoltage": 0.056,
+    "power": 0,
+    "internalResistance": -1,
+    "measurePoints": []
+  },
+  {
+    "name": "D",
+    "state": "IDLE",
+    "elapsedTime": 8467.64,
+    "voltage": 0.064,
+    "current": 0.0004,
+    "inputVoltage": 0.064,
+    "power": 0,
+    "internalResistance": -1,
+    "measurePoints": []
+  }
+]

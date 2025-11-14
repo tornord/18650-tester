@@ -98,10 +98,10 @@ if __name__ == "__main__":
         filename="output.png",
         width=306,
         height=70,
-        line1="TEMPGIVARE",
-        line2="I2C, LM75A",
+        line1="ETHERNET",
+        line2="RJ45 8-PIN",
         font_path="Monaco.ttf",  # path to your .ttf font file
-        font_size=32,
+        font_size=36,
     )
 
     backend = "pyusb"

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import styled from "@emotion/styled";
+import Chart from "./components/Chart";
 
 let MAX_SLOPE = 0;
 
@@ -19,6 +20,12 @@ const Sub = styled.span`
   font-size: 0.8em;
   vertical-align: sub;
 `;
+
+export interface MeasurePoint {
+  time: number; // seconds since start of test
+  voltage: number; // volts
+  current: number; // amps
+}
 
 export interface BatteryData {
   id: string;
@@ -39,6 +46,7 @@ export interface BatteryData {
   chargeTotalTime?: number;
   chargeCapacity?: number;
   chargeEnergy?: number;
+  measurePoints?: MeasurePoint[];
 }
 
 interface BatteryProps {
@@ -115,19 +123,56 @@ const PrintSvg = () => (
 );
 
 const StyledDiv = styled.div`
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid #585858;
+  border-radius: 0.6rem;
   padding: 16px;
   max-width: 400px;
-  background: #f9f9f9;
+  background: #363636;
+  color: hsl(131.69deg 60.04% 47.39%);
 
   h2 {
+    color: #eee;
+    background-color: hsl(200deg 60.04% 47.39%);
+
+    margin-top: 0;
+    padding: 0.7rem 0.5rem 0.6rem;
+    border-radius: 0.6rem;
+
     a {
       text-decoration: none;
       color: inherit;
     }
   }
 `;
+
+function calcAccumulatedCapacities(points: MeasurePoint[]): number[] {
+  const capacities = [0];
+  let totalCapacity = 0;
+  for (let i = 1; i < points.length; i++) {
+    const p0 = points[i - 1];
+    const p1 = points[i];
+    const avgCurrent = Math.abs((p0.current + p1.current) / 2); // Average current in amps
+    const deltaTime = (p1.time - p0.time) / 3600; // Time difference in hours
+    totalCapacity += avgCurrent * deltaTime * 1000; // Capacity in mAh
+    capacities.push(totalCapacity); // Capacity in mAh
+  }
+  return capacities;
+}
+
+function calcAccumulatedEnergies(points: MeasurePoint[]): number[] {
+  const energies = [0];
+  let totalEnergy = 0;
+  for (let i = 1; i < points.length; i++) {
+    const p0 = points[i - 1];
+    const p1 = points[i];
+    const avgVoltage = Math.abs((p0.voltage + p1.voltage) / 2); // Average voltage in volts
+    const avgCurrent = Math.abs((p0.current + p1.current) / 2); // Average current in amps
+    const deltaTime = (p1.time - p0.time) / 3600; // Time difference in hours
+    totalEnergy += avgVoltage * avgCurrent * deltaTime * 1000; // Energy in mWh
+    energies.push(totalEnergy); // Energy in mWh
+  }
+  return energies;
+}
 
 const Battery: React.FC<BatteryProps> = ({ timestamp, currData, prevData, currTimestamp, prevTimestamp }) => {
   function extrapolateValue(key: string): number {
@@ -153,10 +198,10 @@ const Battery: React.FC<BatteryProps> = ({ timestamp, currData, prevData, currTi
     if (currData.state !== prevData.state) return currValue;
     const prevValue = (prevData as any)[key];
     const slope = (prevValue - currValue) / (prevTimestamp - currTimestamp);
-    if (Math.abs(slope) > Math.abs(MAX_SLOPE)) {
-      MAX_SLOPE = slope;
-      console.log("New max slope for", key, ":", MAX_SLOPE); // eslint-disable-line no-console
-    }
+    // if (Math.abs(slope) > Math.abs(MAX_SLOPE)) {
+    //   MAX_SLOPE = slope;
+    //   console.log("New max slope for", key, ":", MAX_SLOPE); // eslint-disable-line no-console
+    // }
     return currValue + slope * (timestamp - currTimestamp);
   }
 
@@ -257,6 +302,19 @@ const Battery: React.FC<BatteryProps> = ({ timestamp, currData, prevData, currTi
           <strong>Charge Energy:</strong> {(extrapolateValue("chargeEnergy") / 1000).toFixed(2)} Wh
         </div>
       )}
+      {currData.measurePoints && currData.measurePoints.length > 0 && (
+        <div>
+          <strong>Measurement Points:</strong>
+          <Chart
+            points={currData.measurePoints.map((p, i) => ({
+              x: p.time,
+              y: p.voltage,
+            }))}
+            width={300}
+            height={120}
+          />
+        </div>
+      )}
       {["WCHG", "CHG", "FIN"].includes(currData.state) && (
         <button
           onClick={handlePrint}
@@ -264,7 +322,7 @@ const Battery: React.FC<BatteryProps> = ({ timestamp, currData, prevData, currTi
           style={{
             marginTop: 12,
             border: "none",
-            background: "#eee",
+            background: "#686868",
             padding: 0,
             borderRadius: 4,
             cursor: loading ? "not-allowed" : "pointer",

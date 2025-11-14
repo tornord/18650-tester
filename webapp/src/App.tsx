@@ -6,7 +6,7 @@ import Battery, { BatteryData } from "./Battery";
 import { secs } from "./time-helper";
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-const { VITE_ARDUINO_IPS } = (import.meta as any).env; 
+const { VITE_ARDUINO_IPS } = (import.meta as any).env;
 const FETCH_INTERVAL = 60000; // 60 seconds
 
 const StyledApp = styled.div(
