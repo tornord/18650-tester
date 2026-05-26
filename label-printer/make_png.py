@@ -15,6 +15,7 @@ def make_png(filename, width, height, line1, line2, font_path, font_size):
         font = ImageFont.truetype(font_path, font_size)
     except OSError:
         font = ImageFont.load_default()
+        print("font error")
 
     # Get text size and position line1
     bbox1 = draw.text((4, -7), line1, font=font, fill="black")
@@ -32,18 +33,19 @@ def make_png(filename, width, height, line1, line2, font_path, font_size):
     img.save(filename, "PNG")
 
 
-# Example usage:
+if __name__ == "__main__":
+    # Example usage:
 
-today_str = date.today().strftime("%y%m")
-capacity = 2.4
-internal_resistance = 0.092
+    today_str = date.today().strftime("%y%m")
+    capacity = 2.3
+    internal_resistance = 0.092
 
-make_png(
-    filename="output.png",
-    width=306,
-    height=70,
-    line1=today_str,
-    line2=f"{10*capacity:.0f}dAh" + " | " + f"{100*internal_resistance:.0f}cΩ",
-    font_path="Monaco.ttf",  # path to your .ttf font file
-    font_size=36,
-)
+    make_png(
+        filename="output.png",
+        width=306,
+        height=70,
+        line1=today_str,
+        line2=f"{10*capacity:.0f}dAh" + " | " + f"{100*internal_resistance:.0f}cΩ",
+        font_path="Monaco.ttf",  # path to your .ttf font file
+        font_size=36,
+    )
