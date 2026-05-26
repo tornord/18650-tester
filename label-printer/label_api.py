@@ -39,30 +39,24 @@ def generate_label(capacity, internal_resistance):
         }
 
 
-@app.route("/", methods=["POST"])
+@app.route("/", methods=["GET"])
 def handle_label_request():
     """
-    Handle POST requests to generate labels.
-    Expected JSON body: {"capacity": 2.6, "internalResistance": 0.09}
+    Handle GET requests to generate labels.
+    Expected query args: ?capacity=2.6&internalResistance=0.09
     """
     try:
-        # Get JSON data from request
-        data = request.get_json()
-
-        if not data:
-            return jsonify({"success": False, "message": "No JSON data provided"}), 400
+        # Get query parameters from request
+        capacity = request.args.get("capacity")
+        internal_resistance = request.args.get("internalResistance")
 
         # Extract required parameters
-        capacity = data.get("capacity")
-        internal_resistance = data.get("internalResistance")
-
-        # Validate parameters
         if capacity is None:
             return (
                 jsonify(
                     {
                         "success": False,
-                        "message": "Missing required parameter: capacity",
+                        "message": "Missing required query parameter: capacity",
                     }
                 ),
                 400,
@@ -73,7 +67,7 @@ def handle_label_request():
                 jsonify(
                     {
                         "success": False,
-                        "message": "Missing required parameter: internalResistance",
+                        "message": "Missing required query parameter: internalResistance",
                     }
                 ),
                 400,
@@ -116,7 +110,7 @@ def health_check():
     return jsonify({"status": "healthy", "message": "Label API is running"}), 200
 
 
-@app.route("/", methods=["GET"])
+@app.route("/static", methods=["GET"])
 def serve_static():
     """Serve static files from /dist folder"""
     # Check if dist folder exists
@@ -152,7 +146,7 @@ def serve_static():
         return jsonify({"error": "Could not read dist folder", "message": str(e)}), 500
 
 
-@app.route("/<path:filename>")
+@app.route("/static/<path:filename>")
 def serve_static_file(filename):
     """Serve individual static files from /dist folder"""
     if not os.path.exists("dist"):
@@ -188,16 +182,15 @@ def api_info():
             {
                 "message": "Label Generation API",
                 "endpoints": {
-                    "POST /": "Generate label with capacity and internalResistance",
-                    "GET /": "Serve static files from /dist folder",
-                    "GET /<filename>": "Serve individual static files",
+                    "GET /": "Generate label with capacity and internalResistance via query args",
+                    "GET /static": "Serve static files from /dist folder",
+                    "GET /static/<filename>": "Serve individual static files",
                     "GET /api": "API information (this endpoint)",
                     "GET /health": "Health check",
                 },
                 "example_request": {
-                    "method": "POST",
-                    "url": "/",
-                    "body": {"capacity": 2.6, "internalResistance": 0.09},
+                    "method": "GET",
+                    "url": "/?capacity=2.6&internalResistance=0.09",
                 },
             }
         ),
@@ -210,8 +203,6 @@ if __name__ == "__main__":
     print("API will be available at: http://127.0.0.1:5001")
     print("Static files will be served from: /dist folder")
     print("Example request:")
-    print(
-        'curl -X POST http://127.0.0.1:5001/ -H "Content-Type: application/json" -d \'{"capacity": 2.6, "internalResistance": 0.09}\''
-    )
+    print('curl "http://127.0.0.1:5001/?capacity=2.6&internalResistance=0.09"')
 
     app.run(host="0.0.0.0", port=5001, debug=True)

@@ -24,11 +24,10 @@ def test_label_api():
     print("-" * 50)
     
     try:
-        # Make POST request
-        response = requests.post(
+        # Make GET request with query parameters
+        response = requests.get(
             url,
-            json=test_data,
-            headers={'Content-Type': 'application/json'},
+            params=test_data,
             timeout=30
         )
         
