@@ -98,8 +98,8 @@ if __name__ == "__main__":
         filename="output.png",
         width=306,
         height=70,
-        line1="ETHERNET",
-        line2="RJ45 8-PIN",
+        line1="Maj 2026",
+        line2="18dAh | 4cΩ",
         font_path="Monaco.ttf",  # path to your .ttf font file
         font_size=36,
     )

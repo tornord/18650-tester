@@ -40,7 +40,8 @@ void Battery::reset()
 void Battery::setOutput(int modeD3, int modeD4)
 {
   digitalWrite(chargeOutputPin, modeD3);
-  digitalWrite(dischargeOutputPin, modeD4);
+  int dutyCycle = modeD4 ? 4 : 0; // 10% of 255 ≈ 25
+  analogWrite(dischargeOutputPin, dutyCycle);
 }
 
 void Battery::measureInternalResistance()

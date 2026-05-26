@@ -1,6 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#define SKIP_CHARGING 0
 #define DISCHARGE_WAIT_TIME 3600.0f       // seconds
 #define CHARGE_WAIT_TIME 60.0f          // seconds
 #define DISCHARGE_CUTOFF_VOLTAGE 3.00f  // volts, 3.00

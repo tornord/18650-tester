@@ -1,0 +1,2 @@
+#define SECRET_SSID "Deco-4DF13F"
+#define SECRET_PASS "CjpP38JX46"
