@@ -78,3 +78,50 @@ Check that it is installed:
 ```sh
 fc-list | grep Monaco
 ```
+
+## Install as service on Linux
+
+1. Create ini-file:
+
+```sh
+sudo nano /etc/systemd/system/label-printer.service
+```
+
+Content:
+
+```ini
+[Unit]
+Description=18650 Label Printer API
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/repos/18650-tester/label-printer
+ExecStart=/home/pi/repos/18650-tester/label-printer/.venv/bin/python /home/pi/repos/18650-tester/label-printer/label_api.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+2. Start it:
+
+```sh
+sudo systemctl daemon-reload
+sudo systemctl enable label-printer.service
+sudo systemctl start label-printer.service
+```
+
+3. Check status:
+
+```sh
+systemctl status label-printer.service
+```
+
+4. View logs:
+
+```sh
+journalctl -u label-printer.service -f
+```
