@@ -95,18 +95,24 @@
 
     <script>
       document.getElementById("paramForm").addEventListener("submit", function (e) {
-        e.preventDefault(); // Stop standard form submission
+        e.preventDefault();
 
-        // Get selected values
         const capacityRaw = document.querySelector('input[name="capacity"]:checked').value;
         const irRaw = document.querySelector('input[name="internalResistance"]:checked').value;
 
-        // Convert values (divide by 1000)
         const capacityVal = capacityRaw / 1000;
         const irVal = irRaw / 1000;
 
-        // Redirect to the formatted URL on the same site
-        window.location.href = `/print?capacity=${capacityVal}&internalResistance=${irVal}`;
+        const params = new URLSearchParams({ capacity: capacityVal, internalResistance: irVal });
+
+        fetch(`/print?${params.toString()}`, { method: "POST" })
+          .then((res) => {
+            if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+          })
+          .catch((err) => {
+            console.error(err);
+            alert("Print request failed: " + err.message);
+          });
       });
     </script>
   </body>
