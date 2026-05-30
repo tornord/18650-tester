@@ -40,6 +40,12 @@ def generate_label(capacity, internal_resistance):
 
 
 @app.route("/", methods=["GET"])
+def index():
+    """Serve the index.html form page"""
+    return send_from_directory(".", "index.html")
+
+
+@app.route("/print", methods=["GET"])
 def handle_label_request():
     """
     Handle GET requests to generate labels.
