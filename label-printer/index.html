@@ -105,7 +105,7 @@
 
         const params = new URLSearchParams({ capacity: capacityVal, internalResistance: irVal });
 
-        fetch(`/print?${params.toString()}`, { method: "POST" })
+        fetch(`/print?${params.toString()}`, { method: "GET" })
           .then((res) => {
             if (!res.ok) throw new Error(`Request failed: ${res.status}`);
           })
